@@ -11,7 +11,6 @@ export function is_national_code_valid(
       .reduce((x, y) => x + y) % 11;
   return (sum < 2 && check == sum) || (sum >= 2 && check + sum == 11);
 }
-
 export function is_phone_number_valid(
   phoneNumber: number | string | undefined | null
 ): boolean {
@@ -19,14 +18,12 @@ export function is_phone_number_valid(
   const iranianPhoneNumberRegex = /^(\+98|0098|0)[1-9]\d{9}$/;
   return iranianPhoneNumberRegex.test(phoneNumber.toString());
 }
-
 export function is_sayad_id_code_valid(
   sayad_id: string | undefined | null
 ): boolean {
   if (sayad_id == null) return false;
   return sayad_id.length === 16;
 }
-
 export function is_percent_valid(
   percent: number | string | undefined | null
 ): boolean {
@@ -48,16 +45,23 @@ export function is_IPv4_valid(ip: any): boolean {
     /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   return regexPattern.test(ip.toString());
 }
-export function is_only_digits(value: any) {
+export function is_only_digits(value: any): boolean {
   if (value == null) return false;
   if (typeof value === "function") return false;
   if (typeof value === "object" && !Array.isArray(value)) return false;
   return /^-?\d+$/.test(value.toString());
 }
-
-export function is_empty(str: any) {
+export function is_empty(str: any): boolean {
   if (str == null) return true;
   if (typeof str === "function") return false;
   if (typeof str === "object" && !Array.isArray(str)) return false;
   return str.toString().trim().length === 0;
+}
+export function is_email_valid(email: any): boolean {
+  if (email == null) return false;
+  return email
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
 }

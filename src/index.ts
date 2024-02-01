@@ -6,6 +6,7 @@ import {
   is_percent_valid,
   is_phone_number_valid,
   is_sayad_id_code_valid,
+  is_email_valid,
 } from "./phrase_validations";
 import { thousands_split, cloneDeep } from "./helper";
 export {
@@ -16,6 +17,7 @@ export {
   is_percent_valid,
   is_phone_number_valid,
   is_sayad_id_code_valid,
+  is_email_valid,
   thousands_split,
   cloneDeep,
 };
