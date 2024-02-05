@@ -65,3 +65,13 @@ export function is_email_valid(email: any): boolean {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
 }
+export function is_id_valid(id: any): boolean {
+  if (!id) return false;
+  return is_only_digits(id);
+}
+export function is_number_valid(value: any): boolean {
+  if (typeof value === "function") return false;
+  if (typeof value === "object" && !Array.isArray(value)) return false;
+  if (isNaN(value)) return false;
+  return true;
+}

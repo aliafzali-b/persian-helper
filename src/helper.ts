@@ -39,12 +39,41 @@ export function eraseCookie(cname: string) {
           document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
       } */
 }
-// this function takes an array of objects and a key, sorts the array in ascending order based on the values of the specified key, and returns the sorted array.
-export function sortByKey(array: any, key: string) {
+
+// Function to sort array of objects by key and order
+export function sort_by_key(
+  array: any[],
+  key: string,
+  order: "asc" | "desc" = "asc"
+): any[] {
   return array.sort(function (a: any, b: any) {
     var x = a[key];
     var y = b[key];
-    return x < y ? -1 : x > y ? 1 : 0;
+
+    // Handle null values
+    if (x === null && y === null) {
+      return 0;
+    } else if (x === null) {
+      return order === "asc" ? -1 : 1; // Treat null as smaller
+    } else if (y === null) {
+      return order === "asc" ? 1 : -1; // Treat null as larger
+    }
+
+    // Compare non-null values
+    if (typeof x === "string" && typeof y === "string") {
+      if (order === "asc") {
+        return x.localeCompare(y);
+      } else {
+        return y.localeCompare(x);
+      }
+    } else {
+      // Fallback to default comparison for non-string values
+      if (order === "asc") {
+        return x < y ? -1 : x > y ? 1 : 0;
+      } else {
+        return x > y ? -1 : x < y ? 1 : 0;
+      }
+    }
   });
 }
 
@@ -117,5 +146,36 @@ export function safelyParseJson<T, K>(data: string, resultIfError: K): T | K {
   } catch (e) {
     console.error(e);
     return resultIfError;
+  }
+}
+enum PasswordStrength {
+  VeryWeak = "Very Weak",
+  Weak = "Weak",
+  Medium = "Medium",
+  Strong = "Strong",
+  VeryStrong = "Very Strong",
+}
+
+export function check_password_strength(password: string): PasswordStrength {
+  // Define regex patterns for different strength levels with shorter lengths
+  const veryWeakRegex = /^(?=.*[a-z]).{4,}$/; // At least one lowercase letter and minimum length 4
+  const weakRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/; // At least one lowercase and one uppercase letter, minimum length 6
+  const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // At least one lowercase letter, one uppercase letter, one digit, minimum length 8
+  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{10,}$/; // At least one lowercase letter, one uppercase letter, one digit, and one special character, minimum length 10
+  const veryStrongRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{12,}$/; // At least one lowercase letter, one uppercase letter, one digit, and one special character, minimum length 12
+
+  if (veryStrongRegex.test(password.toString())) {
+    return PasswordStrength.VeryStrong;
+  } else if (strongRegex.test(password.toString())) {
+    return PasswordStrength.Strong;
+  } else if (mediumRegex.test(password.toString())) {
+    return PasswordStrength.Medium;
+  } else if (weakRegex.test(password.toString())) {
+    return PasswordStrength.Weak;
+  } else if (veryWeakRegex.test(password.toString())) {
+    return PasswordStrength.VeryWeak;
+  } else {
+    return PasswordStrength.VeryWeak; // Default to very weak if none of the patterns match
   }
 }
