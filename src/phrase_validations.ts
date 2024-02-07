@@ -75,3 +75,37 @@ export function is_number_valid(value: any): boolean {
   if (isNaN(value)) return false;
   return true;
 }
+export function is_english_string(
+  input: string,
+  include_digits?: boolean
+): boolean {
+  if (is_empty(input)) return false;
+  let regexPattern = "^[a-zA-Z";
+  if (include_digits) {
+    regexPattern += "0-9";
+  }
+  regexPattern += "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~\\s]*$";
+  const englishRegex = new RegExp(regexPattern);
+  return englishRegex.test(input.toString());
+}
+export function is_persian_string(
+  input: string,
+  include_digits?: boolean
+): boolean {
+  if (is_empty(input)) return false;
+  let regexPattern = "^[\u0600-\u06FF";
+  if (include_digits) {
+    // Unicode range for Persian and English digits
+    regexPattern += "\u06F0-\u06F90-9";
+  }
+  regexPattern += "\\s]*$";
+  const persianRegex = new RegExp(regexPattern);
+  return persianRegex.test(input.toString());
+}
+
+export function is_username_valid(username: string): boolean {
+  //username can contain English letters (both uppercase and lowercase), digits, underscores, and must be between 3 and 16 characters long
+  if (is_empty(username)) return false;
+  const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+  return usernameRegex.test(username);
+}

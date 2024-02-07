@@ -9,6 +9,9 @@ import {
   is_email_valid,
   is_id_valid,
   is_number_valid,
+  is_username_valid,
+  is_persian_string,
+  is_english_string,
 } from "./phrase_validations";
 import {
   thousands_split,
@@ -16,6 +19,7 @@ import {
   sort_by_key,
   check_password_strength,
 } from "./helper";
+import { convert_object_to_formData } from "./converters";
 export {
   is_IPv4_valid,
   is_empty,
@@ -31,4 +35,8 @@ export {
   is_id_valid,
   sort_by_key,
   check_password_strength,
+  convert_object_to_formData,
+  is_username_valid,
+  is_persian_string,
+  is_english_string,
 };

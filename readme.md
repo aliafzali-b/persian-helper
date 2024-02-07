@@ -41,3 +41,13 @@ const B=cloneDeep(A);
 ### is_number_valid(x:any)
 
 ### is_id_valid(x:any)
+
+### is_username_valid(x:any)
+
+### is_persian_string(x:any,include_digits?:boolean)
+
+### is_english_string(x:any,include_digits?:boolean)
+
+## Converters
+
+### convert_object_to_formData(x:object)
