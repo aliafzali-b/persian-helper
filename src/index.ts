@@ -18,6 +18,8 @@ import {
   cloneDeep,
   sort_by_key,
   check_password_strength,
+  normalize_chars,
+  normalize_digits,
 } from "./helper";
 import { convert_object_to_formData } from "./converters";
 export {
@@ -39,4 +41,6 @@ export {
   is_username_valid,
   is_persian_string,
   is_english_string,
+  normalize_chars,
+  normalize_digits,
 };

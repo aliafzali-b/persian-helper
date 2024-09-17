@@ -1,12 +1,16 @@
+import { normalize_digits } from "./helper";
+
 export function is_national_code_valid(
   input: number | string | undefined | null
 ): boolean {
   if (input == null) return false;
+  input = normalize_digits(input.toString());
   if (!/^\d{10}$/.test(input.toString())) return false;
   var check = parseInt(input.toString()[9]);
   var sum =
     Array(9)
       .fill(undefined)
+      //@ts-ignore
       .map((_, i) => parseInt(input.toString()[i]) * (10 - i))
       .reduce((x, y) => x + y) % 11;
   return (sum < 2 && check == sum) || (sum >= 2 && check + sum == 11);
@@ -15,6 +19,7 @@ export function is_phone_number_valid(
   phoneNumber: number | string | undefined | null
 ): boolean {
   if (phoneNumber == null) return false;
+  phoneNumber = normalize_digits(phoneNumber.toString());
   const iranianPhoneNumberRegex = /^(\+98|0098|0)[1-9]\d{9}$/;
   return iranianPhoneNumberRegex.test(phoneNumber.toString());
 }
@@ -49,7 +54,8 @@ export function is_only_digits(value: any): boolean {
   if (value == null) return false;
   if (typeof value === "function") return false;
   if (typeof value === "object" && !Array.isArray(value)) return false;
-  return /^-?\d+$/.test(value.toString());
+
+  return /^-?\d+$/.test(normalize_digits(value.toString()));
 }
 export function is_empty(str: any): boolean {
   if (str == null) return true;

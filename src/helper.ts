@@ -179,3 +179,46 @@ export function check_password_strength(password: string): PasswordStrength {
     return PasswordStrength.VeryWeak; // Default to very weak if none of the patterns match
   }
 }
+export function normalize_digits(value: string): string {
+  const digitMap: { [key: string]: string } = {
+    "۰": "0",
+    "١": "1",
+    "٢": "2",
+    "٣": "3",
+    "٤": "4",
+    "٥": "5",
+    "٦": "6",
+    "٧": "7",
+    "٨": "8",
+    "٩": "9",
+    // Arabic-Indic
+    //"۰": "0",
+    "۱": "1",
+    "۲": "2",
+    "۳": "3",
+    "۴": "4",
+    "۵": "5",
+    "۶": "6",
+    "۷": "7",
+    "۸": "8",
+    "۹": "9",
+    // Eastern Arabic
+    "०": "0",
+    "१": "1",
+    "२": "2",
+    "३": "3",
+    "४": "4",
+    "५": "5",
+    "६": "6",
+    "७": "7",
+    "८": "8",
+    "९": "9",
+    // Devanagari
+  };
+  return value.replace(/[۰-۹٠-٩०-९]/g, (digit) => digitMap[digit] || digit);
+}
+export function normalize_chars(value: string): string {
+  value = value.replace("ك", "ک");
+  value = value.replace("ي", "ی");
+  return value;
+}
