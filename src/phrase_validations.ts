@@ -73,7 +73,8 @@ export function is_email_valid(email: any): boolean {
 }
 export function is_id_valid(id: any): boolean {
   if (!id) return false;
-  return is_only_digits(id);
+  if (!is_only_digits(id)) return false;
+  return parseInt(id.toString(), 10) > 0;
 }
 export function is_number_valid(value: any): boolean {
   if (typeof value === "function") return false;
